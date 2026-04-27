@@ -712,39 +712,63 @@
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    // Live getConfig (Gen 2, africa-south1) — links the store to Firebase + Paystack public key
+    // All client config comes from getConfig only — nothing sensitive is embedded in this file.
     const CONFIG_ENDPOINT = "https://getconfig-yggxusmprq-bq.a.run.app";
 
-    const FALLBACK_FIREBASE_CONFIG = {
-      apiKey: "AIzaSyBXSj5dRu6VjFgxwSmySjyXUiqZQp0DsR8",
-      authDomain: "yanos-kicks.firebaseapp.com",
-      projectId: "yanos-kicks",
-      storageBucket: "yanos-kicks.firebasestorage.app",
-      messagingSenderId: "516353385295",
-      appId: "1:516353385295:web:f9d843e833af632b6f5b3a",
-      measurementId: "G-ENF8J3Z49L",
-    };
+    function showConfigError(message) {
+      document.body.innerHTML =
+        '<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem;font-family:system-ui,sans-serif;text-align:center;color:#1a1a1a;background:#faf9f6">' +
+        "<div><p style=\"font-size:1rem;margin:0 0 0.5rem\">" +
+        message +
+        '</p><p style="font-size:0.875rem;opacity:0.7;margin:0">Refresh the page or try again shortly.</p></div></div>';
+    }
 
-    let PAYSTACK_PUBLIC_KEY = "pk_live_YOUR_ACTUAL_LIVE_PUBLIC_KEY_HERE";
-    let firebaseConfig = { ...FALLBACK_FIREBASE_CONFIG };
-
+    let cfgRes;
     try {
-      const cfgRes = await fetch(CONFIG_ENDPOINT);
-      if (cfgRes.ok) {
-        const remote = await cfgRes.json();
-        if (remote.paystackPublicKey) PAYSTACK_PUBLIC_KEY = remote.paystackPublicKey;
-        if (remote.firebaseConfig && typeof remote.firebaseConfig === "object") {
-          firebaseConfig = { ...firebaseConfig, ...remote.firebaseConfig };
-        }
-      }
+      cfgRes = await fetch(CONFIG_ENDPOINT);
     } catch (e) {
-      console.warn("Remote config unavailable; using embedded fallback.", e);
+      console.error(e);
+      showConfigError("Could not reach the configuration server.");
+      throw e;
+    }
+
+    if (!cfgRes.ok) {
+      showConfigError("Store configuration could not be loaded.");
+      throw new Error("Config HTTP " + cfgRes.status);
+    }
+
+    let remote;
+    try {
+      remote = await cfgRes.json();
+    } catch (e) {
+      console.error(e);
+      showConfigError("Invalid configuration response.");
+      throw e;
+    }
+
+    const firebaseConfig = remote.firebaseConfig;
+    const requiredKeys = ["apiKey", "authDomain", "projectId", "storageBucket", "messagingSenderId", "appId"];
+    if (!firebaseConfig || typeof firebaseConfig !== "object") {
+      showConfigError("Missing Firebase configuration.");
+      throw new Error("Missing firebaseConfig");
+    }
+    for (const key of requiredKeys) {
+      if (firebaseConfig[key] == null || String(firebaseConfig[key]).trim() === "") {
+        showConfigError("Incomplete store configuration.");
+        throw new Error("Missing " + key);
+      }
+    }
+
+    const PAYSTACK_PUBLIC_KEY = remote.paystackPublicKey;
+    if (!PAYSTACK_PUBLIC_KEY || String(PAYSTACK_PUBLIC_KEY).includes("YOUR_ACTUAL")) {
+      showConfigError("Payment configuration is not ready.");
+      throw new Error("Missing paystackPublicKey");
     }
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    const fbAppId = 'yanos-kicks';
+    const fbAppId = firebaseConfig.projectId;
 
     const state = {
       items: [],
