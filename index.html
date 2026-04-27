@@ -1,0 +1,1690 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yanos Kicks — Premium Sneaker Plug</title>
+  <meta name="description" content="South Africa's premium sneaker plug. Top-tier quality Nike and Adidas kicks." />
+  
+  <!-- Fonts: Playfair Display (Luxury Serif) & Inter (Clean Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&display=swap" rel="stylesheet" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { 
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+            amoresa: ['Amoresa', 'Playfair Display', 'serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#84a96e',
+              dark: '#6b8c56',
+              light: '#f2f6ef',
+            },
+            dark: '#050505',
+            cream: '#FAF9F6',
+            gold: '#C5A059'
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Paystack Inline JS -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+
+  <!-- Custom Styles -->
+  <style>
+    @font-face {
+      font-family: 'Amoresa';
+      src: local('Amoresa'), url('./Amoresa.ttf') format('truetype'), url('./Amoresa.woff2') format('woff2'), url('./Amoresa.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    body { background-color: #FAF9F6; }
+    
+    /* Custom Elegant Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #FAF9F6; border-left: 1px solid #eae8e1; }
+    ::-webkit-scrollbar-thumb { background: #050505; }
+    ::-webkit-scrollbar-thumb:hover { background: #84a96e; }
+
+    /* Modal Animation */
+    #modal, #checkoutModal, #authModal, #dashboardModal, #legalModal { transition: opacity 0.4s ease, visibility 0.4s ease; }
+    #modal[aria-hidden="true"], #checkoutModal[aria-hidden="true"], #authModal[aria-hidden="true"], #dashboardModal[aria-hidden="true"], #legalModal[aria-hidden="true"] { opacity: 0; visibility: hidden; pointer-events: none; }
+    #modal[aria-hidden="false"], #checkoutModal[aria-hidden="false"], #authModal[aria-hidden="false"], #dashboardModal[aria-hidden="false"], #legalModal[aria-hidden="false"] { opacity: 1; visibility: visible; pointer-events: auto; }
+    
+    .modal-panel { transform: translateY(20px); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    #modal[aria-hidden="false"] .modal-panel, #checkoutModal[aria-hidden="false"] .modal-panel, #authModal[aria-hidden="false"] .modal-panel, #dashboardModal[aria-hidden="false"] .modal-panel, #legalModal[aria-hidden="false"] .modal-panel { transform: translateY(0); }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    /* Editorial Image Hover */
+    .editorial-img-wrap img { transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+    .editorial-img-wrap:hover img { transform: scale(1.08); }
+    
+    /* Thin elegant select arrow */
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23050505' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 0.75rem center;
+      background-repeat: no-repeat;
+      background-size: 1.5em 1.5em;
+      padding-right: 2.5rem;
+    }
+    select::-ms-expand {
+      display: none;
+    }
+
+    /* Cart Slide Panel */
+    #cartPanel {
+      transform: translateX(100%);
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    #cartPanel.open {
+      transform: translateX(0);
+    }
+    #cartOverlay {
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+      opacity: 0;
+      visibility: hidden;
+    }
+    #cartOverlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
+</head>
+<body class="text-dark antialiased selection:bg-brand selection:text-white flex flex-col min-h-screen">
+
+  <!-- Header / Nav -->
+  <header class="bg-cream/95 border-b border-dark/10 sticky top-0 z-50 backdrop-blur-md" id="header">
+    <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 relative">
+      <div class="flex items-center justify-between h-20 sm:h-24 md:h-28 gap-2 md:gap-6">
+        
+        <!-- Left: Logo -->
+        <div class="flex items-center shrink-0">
+          <a href="#" class="flex items-center group">
+            <div class="h-14 sm:h-16 md:h-24 w-auto mix-blend-multiply">
+              <img class="h-full w-auto object-contain transition-transform duration-500 group-hover:scale-105" src="./Yanoslogo.jpg" alt="Yanos Kicks Logo" onerror="this.onerror=function(){this.onerror=null; this.src='./Yanoslogo.jpeg'}; this.src='./Yanoslogo.png';" />
+            </div>
+          </a>
+        </div>
+
+        <!-- Center: Nav Links -->
+        <nav class="flex items-center justify-center gap-3 sm:gap-6 md:gap-8 text-[8px] sm:text-[9px] md:text-[10px] uppercase tracking-[0.1em] sm:tracking-[0.2em] font-bold text-dark/70 flex-1 whitespace-nowrap overflow-x-auto no-scrollbar">
+          <a href="#catalogue" class="hover:text-dark transition-colors relative after:content-[''] after:absolute after:-bottom-1.5 after:left-0 after:w-0 after:h-[1px] after:bg-dark hover:after:w-full after:transition-all after:duration-300">Shop</a>
+          <a href="#how-it-works" class="hover:text-dark transition-colors relative after:content-[''] after:absolute after:-bottom-1.5 after:left-0 after:w-0 after:h-[1px] after:bg-dark hover:after:w-full after:transition-all after:duration-300">The Process</a>
+          <a href="#faq" class="hover:text-dark transition-colors relative after:content-[''] after:absolute after:-bottom-1.5 after:left-0 after:w-0 after:h-[1px] after:bg-dark hover:after:w-full after:transition-all after:duration-300">FAQ</a>
+        </nav>
+
+        <!-- Right: CTA, Account & Cart -->
+        <div class="flex items-center justify-end shrink-0 gap-2 sm:gap-4">
+          <button id="accountBtn" class="hidden sm:flex relative items-center justify-center gap-2 px-3 py-2 bg-transparent text-dark text-[8px] sm:text-[9px] md:text-[11px] uppercase tracking-[0.1em] md:tracking-[0.2em] font-bold hover:text-brand transition-all duration-300">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+            <span id="accountLabel">Login</span>
+          </button>
+          <button id="openCartBtn" class="relative inline-flex items-center justify-center gap-2 px-3 py-2 sm:px-5 sm:py-3 md:px-6 md:py-3.5 bg-transparent text-dark text-[8px] sm:text-[9px] md:text-[11px] uppercase tracking-[0.1em] md:tracking-[0.2em] font-bold border border-dark hover:bg-dark hover:text-white transition-all duration-300 whitespace-nowrap">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg>
+            Cart (<span id="cartBadge">0</span>)
+          </button>
+          <a href="https://wa.me/message/QSXVPANGMQIHP1" target="_blank" class="hidden md:inline-flex items-center justify-center gap-2 px-3 py-2 sm:px-5 sm:py-3 md:px-8 md:py-3.5 bg-brand text-white text-[8px] sm:text-[9px] md:text-[11px] uppercase tracking-[0.1em] md:tracking-[0.2em] font-bold border border-brand hover:bg-dark hover:border-dark transition-all duration-500 whitespace-nowrap">
+            Chat To Us
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow w-full">
+    
+    <!-- Editorial Hero Section -->
+    <section class="relative pt-20 pb-32 overflow-hidden monogram-bg border-b border-dark/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="flex flex-col items-center justify-center text-center max-w-4xl mx-auto">
+          
+          <div class="w-full">
+            <div class="inline-flex items-center justify-center gap-3 mb-8">
+              <div class="h-[1px] w-8 sm:w-12 bg-brand"></div>
+              <span class="text-[10px] uppercase tracking-[0.25em] font-bold text-dark">Premium Sneaker Catalogue</span>
+              <div class="h-[1px] w-8 sm:w-12 bg-brand"></div>
+            </div>
+            
+            <h1 class="text-5xl sm:text-7xl lg:text-8xl font-serif font-black leading-[1.05] tracking-tight text-dark mb-6">
+              Find the perfect <br /> <span class="italic font-light text-dark/80">pair—fast.</span>
+            </h1>
+            
+            <p class="text-base sm:text-lg text-dark/70 mb-10 max-w-lg mx-auto leading-relaxed font-light">
+              Shopping with Yanos Kicks is as simple as 1, 2, 3 - Pick your sneakers, checkout securely online or chat with us on WhatsApp, then get your pair delivered via Postnet branch, home delivery, or Courier Guy PUDO lockers.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+              <a href="#catalogue" class="w-full sm:w-auto px-10 py-4 bg-dark text-white text-[11px] uppercase tracking-[0.2em] font-bold border border-dark hover:bg-cream hover:text-dark transition-colors duration-500 text-center">
+                Shop Catalogue
+              </a>
+            </div>
+
+            <div class="mt-16 grid grid-cols-3 gap-8 border-t border-dark/10 pt-10 max-w-2xl mx-auto">
+              <div>
+                <p class="text-3xl font-serif text-dark" id="heroCount">—</p>
+                <p class="text-[9px] font-bold text-dark/50 uppercase tracking-[0.2em] mt-2">Pairs in Stock</p>
+              </div>
+              <div>
+                <p class="text-3xl font-serif text-dark">2-4</p>
+                <p class="text-[9px] font-bold text-dark/50 uppercase tracking-[0.2em] mt-2">Days Delivery</p>
+              </div>
+              <div>
+                <p class="text-3xl font-serif text-dark">100%</p>
+                <p class="text-[9px] font-bold text-dark/50 uppercase tracking-[0.2em] mt-2">Quality</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section class="py-20 bg-white border-b border-dark/10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 divide-y md:divide-y-0 md:divide-x divide-dark/10">
+          <div class="md:pr-12 pt-8 md:pt-0">
+            <h3 class="font-serif text-xl text-dark mb-3">Fast Nationwide Delivery</h3>
+            <p class="text-sm text-dark/60 font-light leading-relaxed">Swift 2-4 working day standard delivery anywhere in SA, or choose <strong>Overnight Delivery</strong> for an extra R89 per sneaker. We use Courier Guy direct-to-door or discreet PUDO lockers.</p>
+          </div>
+          <div class="md:px-12 pt-8 md:pt-0">
+            <h3 class="font-serif text-xl text-dark mb-3">100% Quality Guaranteed</h3>
+            <p class="text-sm text-dark/60 font-light leading-relaxed">Your satisfaction is our top priority. We easily refund or exchange if you are unhappy with your order for any reason! Safe payments to a registered business.</p>
+          </div>
+          <div class="md:pl-12 pt-8 md:pt-0">
+            <h3 class="font-serif text-xl text-dark mb-3">Personalised Service</h3>
+            <p class="text-sm text-dark/60 font-light leading-relaxed">Not sure about your size? Need a specific pair? Chat with us directly on WhatsApp or IG for sizing advice and stock checks.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Process Funnel -->
+    <section id="how-it-works" class="py-24 bg-dark text-cream relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-cream/20 pb-8">
+          <div>
+            <h2 class="text-4xl md:text-5xl font-serif font-light mb-4">How to Secure Your Pair</h2>
+            <p class="text-cream/60 text-sm font-light uppercase tracking-widest">Fast. Simple. Secure.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-12 gap-y-16">
+          <div class="relative group">
+            <div class="text-brand font-serif text-6xl mb-6 opacity-50 group-hover:opacity-100 transition-opacity">01</div>
+            <h3 class="text-lg font-bold uppercase tracking-widest mb-3 text-white">Find Your Pair</h3>
+            <p class="text-cream/60 font-light text-sm leading-relaxed">Browse our live catalogue below. Use the filters to search by brand, model, or price to find exactly what you're looking for.</p>
+          </div>
+          <div class="relative group">
+            <div class="text-brand font-serif text-6xl mb-6 opacity-50 group-hover:opacity-100 transition-opacity">02</div>
+            <h3 class="text-lg font-bold uppercase tracking-widest mb-3 text-white">Secure Checkout or DM</h3>
+            <p class="text-cream/60 font-light text-sm leading-relaxed">Add your size to the cart and checkout instantly with Paystack, <strong>OR</strong> DM us on WhatsApp to order manually.</p>
+          </div>
+          <div class="relative group">
+            <div class="text-brand font-serif text-6xl mb-6 opacity-50 group-hover:opacity-100 transition-opacity">03</div>
+            <h3 class="text-lg font-bold uppercase tracking-widest mb-3 text-white">Unbox & Flex</h3>
+            <p class="text-cream/60 font-light text-sm leading-relaxed">Once payment is confirmed, we pack your order within 24 hours and send your tracking details straight to your email or WhatsApp.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE APP: Catalogue Section -->
+    <section id="catalogue" class="py-24 bg-cream monogram-bg">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div>
+            <h2 class="text-4xl font-serif text-dark mb-2">Live Catalogue</h2>
+            <p class="text-dark/50 text-[11px] uppercase tracking-[0.2em] font-medium">Inventory updated daily</p>
+          </div>
+          <div class="inline-flex items-center gap-3 border-b border-dark pb-2">
+            <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-brand"></span></span>
+            <span class="text-[10px] uppercase tracking-[0.15em] font-bold text-dark">Live Status:</span>
+            <span id="countPill" class="text-[10px] font-serif font-bold text-dark">Loading...</span>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="bg-white border border-dark/10 p-6 mb-12 shadow-sm">
+          <div class="flex flex-col gap-6">
+            <div class="relative w-full border-b border-dark/20 focus-within:border-brand transition-colors">
+              <input id="q" type="search" placeholder="Search by brand, model, or colorway (e.g. 'Air Jordan 4', 'Samba')..." class="w-full pl-2 pr-4 py-3 bg-transparent outline-none text-dark font-serif text-lg placeholder:text-dark/30 placeholder:font-sans placeholder:text-sm placeholder:font-light" autocomplete="off" spellcheck="false" />
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+              <div class="flex flex-col gap-2">
+                <label class="text-[9px] font-bold text-dark/50 uppercase tracking-[0.2em]">Brand</label>
+                <select id="brand" class="w-full bg-transparent appearance-none border-b border-dark/10 pb-2 text-sm font-medium text-dark outline-none cursor-pointer hover:border-dark transition-colors rounded-none"></select>
+              </div>
+              <div class="flex flex-col gap-2">
+                <label class="text-[9px] font-bold text-dark/50 uppercase tracking-[0.2em]">Category</label>
+                <select id="category" class="w-full bg-transparent appearance-none border-b border-dark/10 pb-2 text-sm font-medium text-dark outline-none cursor-pointer hover:border-dark transition-colors rounded-none"></select>
+              </div>
+              <div class="flex flex-col gap-2">
+                <label class="text-[9px] font-bold text-dark/50 uppercase tracking-[0.2em]">Model</label>
+                <select id="model" class="w-full bg-transparent appearance-none border-b border-dark/10 pb-2 text-sm font-medium text-dark outline-none cursor-pointer hover:border-dark transition-colors rounded-none"></select>
+              </div>
+              <div class="flex flex-col gap-2">
+                <label class="text-[9px] font-bold text-dark/50 uppercase tracking-[0.2em]">Price</label>
+                <select id="priceFilter" class="w-full bg-transparent appearance-none border-b border-dark/10 pb-2 text-sm font-medium text-dark outline-none cursor-pointer hover:border-dark transition-colors rounded-none">
+                  <option value="all">All Prices</option>
+                  <option value="1300">R1,300</option>
+                  <option value="1400">R1,400</option>
+                  <option value="1500">R1,500</option>
+                  <option value="1600">R1,600</option>
+                </select>
+              </div>
+              <div class="flex flex-col gap-2">
+                <label class="text-[9px] font-bold text-dark/50 uppercase tracking-[0.2em]">Sort By</label>
+                <select id="sort" class="w-full bg-transparent appearance-none border-b border-dark/10 pb-2 text-sm font-medium text-dark outline-none cursor-pointer hover:border-dark transition-colors rounded-none">
+                  <option value="model_asc">Model (A–Z)</option>
+                  <option value="model_desc">Model (Z–A)</option>
+                  <option value="brand_asc">Brand (A–Z)</option>
+                  <option value="brand_desc">Brand (Z–A)</option>
+                  <option value="price_asc">Price (Low to High)</option>
+                  <option value="price_desc">Price (High to Low)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between pt-2">
+              <div id="resultsHint" class="text-[10px] font-medium text-brand uppercase tracking-widest hidden"></div>
+              <button id="clearBtn" class="ml-auto text-[10px] font-bold uppercase tracking-[0.2em] text-dark/50 hover:text-dark transition-colors flex items-center gap-2">
+                Clear Filters
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="grid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-6 sm:gap-x-6 sm:gap-y-10"></div>
+
+        <div id="empty" class="hidden py-32 text-center bg-white border border-dark/10 mt-8 shadow-sm">
+          <h3 class="text-3xl font-serif font-light text-dark mb-4">No pairs found</h3>
+          <p class="text-dark/50 mb-10 text-sm font-light max-w-sm mx-auto" id="emptyHintText">Try changing your filters to see more kicks.</p>
+          <button id="emptyClearBtn" class="px-10 py-4 bg-dark text-white text-[10px] uppercase tracking-[0.2em] font-bold border border-dark hover:bg-white hover:text-dark transition-colors duration-500">
+            Clear All Filters
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQs -->
+    <section id="faq" class="py-24 bg-white border-t border-dark/10">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-serif text-dark mb-12 text-center">Frequently Asked Questions</h2>
+        <div class="divide-y divide-dark/10 border-y border-dark/10">
+          
+          <details class="group [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex cursor-pointer items-center justify-between py-6 text-dark font-serif text-lg">
+              What is your quality guarantee?
+              <span class="shrink-0 transition duration-300 group-open:-rotate-45 text-brand">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+              </span>
+            </summary>
+            <div class="pb-6 text-dark/60 font-light text-sm leading-relaxed">
+              Your satisfaction is our absolute top priority. We guarantee top-tier quality for every pair in our catalogue. If you are unhappy with your order for any reason, we make it incredibly easy to get a refund or an exchange. 
+            </div>
+          </details>
+
+          <details class="group [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex cursor-pointer items-center justify-between py-6 text-dark font-serif text-lg">
+              How long does delivery take?
+              <span class="shrink-0 transition duration-300 group-open:-rotate-45 text-brand">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+              </span>
+            </summary>
+            <div class="pb-6 text-dark/60 font-light text-sm leading-relaxed">
+              Once your payment clears, we pack and ship within 24 hours. Standard delivery via Postnet or Courier Guy (to your door or a PUDO locker) usually takes 2-4 working days anywhere in SA. In a rush? We also offer an <strong>Overnight Delivery</strong> option for an additional R89 per sneaker.
+            </div>
+          </details>
+
+          <details class="group [&_summary::-webkit-details-marker]:hidden">
+            <summary class="flex cursor-pointer items-center justify-between py-6 text-dark font-serif text-lg">
+              Can I return or exchange my shoes?
+              <span class="shrink-0 transition duration-300 group-open:-rotate-45 text-brand">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+              </span>
+            </summary>
+            <div class="pb-6 text-dark/60 font-light text-sm leading-relaxed">
+              Yes! Like we said, your satisfaction is guaranteed. We fully support refunds and size exchanges within 30 days of receiving your order, as long as the sneakers are unworn and in their original packaging. Standard shipping fees apply.
+            </div>
+          </details>
+          
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Product Modal -->
+  <div id="modal" aria-hidden="true" role="dialog" class="fixed inset-0 z-[100] flex items-center justify-center p-0 sm:p-6">
+    <div class="fixed inset-0 bg-cream/95 backdrop-blur-sm" data-close="true"></div>
+    
+    <div class="modal-panel relative bg-white w-full sm:max-w-6xl h-full sm:h-auto sm:max-h-[90vh] border border-dark/10 flex flex-col shadow-2xl">
+      <div class="flex items-center justify-between p-5 border-b border-dark/10 bg-white z-10 shrink-0">
+        <div id="modalTitle" class="w-full flex-1 min-w-0"></div>
+        <button id="closeModalBtn" class="w-10 h-10 flex items-center justify-center border border-dark hover:bg-dark hover:text-white transition-colors text-dark shrink-0 ml-4">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+      
+      <div class="flex-grow flex flex-col lg:flex-row overflow-hidden bg-[#FAFAFA]">
+        <div class="relative w-full lg:w-3/4 flex items-center justify-center p-4 sm:p-10 border-b lg:border-b-0 lg:border-r border-dark/10 bg-white group min-h-[40vh]">
+          <button id="prevImgBtn" class="absolute left-4 p-4 bg-white border border-dark text-dark hover:bg-dark hover:text-white transition-all z-10 opacity-0 group-hover:opacity-100 focus:opacity-100">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 19l-7-7 7-7" /></svg>
+          </button>
+          <img id="viewerImg" class="max-w-full max-h-full object-contain transition-all duration-500" alt="Detailed Preview" />
+          <button id="nextImgBtn" class="absolute right-4 p-4 bg-white border border-dark text-dark hover:bg-dark hover:text-white transition-all z-10 opacity-0 group-hover:opacity-100 focus:opacity-100">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 5l7 7-7 7" /></svg>
+          </button>
+        </div>
+        
+        <div class="w-full lg:w-1/4 p-6 flex flex-col bg-[#FDFDFD] overflow-y-auto">
+          <div class="mb-auto">
+            <h4 class="text-[9px] uppercase tracking-[0.2em] font-bold text-dark/50 mb-4 border-b border-dark/10 pb-2">More Views</h4>
+            <div id="thumbs" class="grid grid-cols-4 lg:grid-cols-2 gap-3 mb-8"></div>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-dark/10">
+            <div class="mb-4">
+              <label class="block text-[10px] font-bold text-dark/50 uppercase tracking-[0.2em] mb-2">Select Size (UK)</label>
+              <select id="shoeSize" class="w-full bg-transparent appearance-none border border-dark/20 p-3 text-sm font-medium text-dark outline-none cursor-pointer hover:border-dark transition-colors">
+                <option value="">Choose size</option>
+              </select>
+              <p id="sizeError" class="text-red-500 text-xs mt-2 hidden">Please select a size first.</p>
+            </div>
+
+            <button id="addToCartBtn" class="w-full flex items-center justify-center gap-2 px-6 py-4 bg-brand text-white text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-dark transition-colors mb-3">
+              Add to Cart
+            </button>
+
+            <div class="relative flex py-2 items-center mb-3">
+              <div class="flex-grow border-t border-dark/10"></div>
+              <span class="flex-shrink-0 mx-4 text-dark/40 text-[9px] uppercase tracking-widest font-bold">Or</span>
+              <div class="flex-grow border-t border-dark/10"></div>
+            </div>
+
+            <a href="https://wa.me/message/QSXVPANGMQIHP1" target="_blank" class="w-full flex items-center justify-center gap-2 px-6 py-3 border border-dark text-dark text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-dark hover:text-white transition-colors">
+              Order via WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cart Slide Panel -->
+  <div id="cartOverlay" class="fixed inset-0 bg-dark/50 z-[190]"></div>
+  <div id="cartPanel" class="fixed right-0 top-0 h-full w-full sm:w-[400px] bg-white shadow-2xl z-[200] flex flex-col border-l border-dark/10">
+    <!-- CONFIG_ENDPOINT (getConfig URL) is set in the <script type="module"> block below. -->
+    <div class="flex items-center justify-between p-6 border-b border-dark/10 bg-cream">
+      <h2 class="text-xl font-serif text-dark">Your Bag</h2>
+      <button id="closeCartBtn" class="text-dark/50 hover:text-dark transition-colors">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" /></svg>
+      </button>
+    </div>
+
+    <div id="cartItemsContainer" class="flex-grow overflow-y-auto p-6 space-y-6"></div>
+
+    <div class="p-6 border-t border-dark/10 bg-cream mt-auto">
+      <div class="flex justify-between items-center mb-4">
+        <span class="text-sm font-light text-dark/70 uppercase tracking-widest">Subtotal</span>
+        <span id="cartSubtotal" class="font-serif text-xl font-medium text-dark">R0</span>
+      </div>
+      <p class="text-[10px] text-dark/50 uppercase tracking-[0.1em] mb-6">Shipping & taxes calculated at checkout.</p>
+      <button id="checkoutBtn" class="w-full px-6 py-4 bg-dark text-white text-[11px] uppercase tracking-[0.2em] font-bold border border-dark hover:bg-white hover:text-dark transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+        Proceed to Checkout
+      </button>
+    </div>
+  </div>
+
+  <!-- Checkout Modal -->
+  <div id="checkoutModal" aria-hidden="true" role="dialog" class="fixed inset-0 z-[210] flex items-center justify-center p-0 sm:p-6">
+    <div class="fixed inset-0 bg-cream/95 backdrop-blur-sm" data-close-checkout="true"></div>
+    <div class="modal-panel relative bg-white w-full sm:max-w-2xl max-h-screen overflow-y-auto border border-dark/10 shadow-2xl p-6 sm:p-10">
+      
+      <div class="flex items-center justify-between border-b border-dark/10 pb-4 mb-6">
+        <h2 class="text-2xl font-serif text-dark">Checkout Details</h2>
+        <button id="closeCheckoutBtn" class="text-dark hover:text-brand transition-colors">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+
+      <form id="checkoutForm" class="space-y-6">
+        <div class="p-4 bg-dark/5 border border-dark/10">
+          <h3 class="text-[10px] font-bold text-dark/50 uppercase tracking-[0.2em] mb-3">Order Summary</h3>
+          <ul id="chkOrderSummary" class="space-y-2 text-sm text-dark font-serif"></ul>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-[10px] font-bold text-dark/50 uppercase tracking-[0.2em] mb-2">Full Name</label>
+            <input type="text" id="chkName" required class="w-full border-b border-dark/20 p-2 outline-none focus:border-brand font-serif text-lg bg-transparent">
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-dark/50 uppercase tracking-[0.2em] mb-2">Email</label>
+            <input type="email" id="chkEmail" required class="w-full border-b border-dark/20 p-2 outline-none focus:border-brand font-serif text-lg bg-transparent">
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-[10px] font-bold text-dark/50 uppercase tracking-[0.2em] mb-2">Phone Number</label>
+          <input type="tel" id="chkPhone" required class="w-full border-b border-dark/20 p-2 outline-none focus:border-brand font-serif text-lg bg-transparent">
+        </div>
+
+        <div>
+          <label class="block text-[10px] font-bold text-dark/50 uppercase tracking-[0.2em] mb-3">Delivery Destination</label>
+          <div class="grid grid-cols-2 gap-3 mb-4">
+            <label class="flex items-center gap-2 p-3 border border-dark/10 cursor-pointer hover:border-dark transition-colors bg-white">
+              <input type="radio" name="deliveryType" value="Home Delivery" checked class="accent-dark w-4 h-4">
+              <span class="text-sm font-medium text-dark">Home Delivery</span>
+            </label>
+            <label class="flex items-center gap-2 p-3 border border-dark/10 cursor-pointer hover:border-dark transition-colors bg-white">
+              <input type="radio" name="deliveryType" value="PostNet Branch" class="accent-dark w-4 h-4">
+              <span class="text-sm font-medium text-dark">PostNet</span>
+            </label>
+            <label class="flex items-center gap-2 p-3 border border-dark/10 cursor-pointer hover:border-dark transition-colors bg-white">
+              <input type="radio" name="deliveryType" value="Courier Guy PUDO" class="accent-dark w-4 h-4">
+              <span class="text-sm font-medium text-dark">PUDO Locker</span>
+            </label>
+            <label class="flex items-center gap-2 p-3 border border-dark/10 cursor-pointer hover:border-dark transition-colors bg-white">
+              <input type="radio" name="deliveryType" value="Custom" class="accent-dark w-4 h-4">
+              <span class="text-sm font-medium text-dark">Custom</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label id="addressLabel" class="block text-[10px] font-bold text-brand uppercase tracking-[0.2em] mb-2">Home Address Details</label>
+          <textarea id="chkAddress" required rows="3" placeholder="Street address, suburb, city, postal code..." class="w-full border border-dark/20 p-3 outline-none focus:border-brand font-serif text-base bg-transparent transition-colors"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-[10px] font-bold text-dark/50 uppercase tracking-[0.2em] mb-3">Shipping Speed</label>
+          <div class="space-y-3">
+            <label class="flex items-center gap-3 p-3 border border-dark/10 cursor-pointer hover:border-dark transition-colors">
+              <input type="radio" name="shipping" value="0" checked class="accent-dark w-4 h-4">
+              <div class="flex-1"><span class="block text-sm font-medium text-dark">Standard Delivery (2-4 Days)</span></div>
+              <span class="font-serif italic text-dark">Free</span>
+            </label>
+            <label class="flex items-center gap-3 p-3 border border-dark/10 cursor-pointer hover:border-dark transition-colors">
+              <input type="radio" name="shipping" value="89" class="accent-dark w-4 h-4">
+              <div class="flex-1"><span class="block text-sm font-medium text-dark">Overnight Express</span></div>
+              <span class="font-serif italic text-dark">+R89</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="border-t border-dark/10 pt-6 mt-6">
+          <div class="flex justify-between items-center mb-2 text-sm text-dark/70"><span>Subtotal</span><span id="summarySubtotal" class="font-serif">R0</span></div>
+          <div class="flex justify-between items-center mb-4 text-sm text-dark/70"><span>Shipping</span><span id="summaryShipping" class="font-serif">R0</span></div>
+          <div class="flex justify-between items-center text-xl text-dark"><span class="font-serif">Total</span><span id="summaryTotal" class="font-serif font-medium">R0</span></div>
+        </div>
+
+        <button type="submit" id="paystackBtn" class="w-full flex items-center justify-center gap-2 px-6 py-4 bg-brand text-white text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-dark transition-colors">
+          Pay Securely with Paystack
+        </button>
+        <p class="text-center text-xs text-dark/40 mt-2">🔒 Secured by Paystack. Supports Cards, EFT, and more.</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Auth Modal (Login/Signup) -->
+  <div id="authModal" aria-hidden="true" role="dialog" class="fixed inset-0 z-[220] flex items-center justify-center p-0 sm:p-6">
+    <div class="fixed inset-0 bg-cream/95 backdrop-blur-sm" data-close-auth="true"></div>
+    <div class="modal-panel relative bg-white w-full sm:max-w-md border border-dark/10 shadow-2xl p-8">
+      <div class="flex items-center justify-between mb-8 border-b border-dark/10 pb-4">
+        <h2 id="authTitle" class="text-2xl font-serif text-dark">Welcome Back</h2>
+        <button id="closeAuthBtn" class="text-dark hover:text-brand transition-colors">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+      
+      <div class="flex flex-col gap-3 mb-6">
+        <button id="googleSignInBtn" type="button" class="w-full flex items-center justify-center gap-3 px-6 py-3.5 border border-dark/20 hover:border-dark transition-colors font-medium text-sm text-dark bg-white">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          Continue with Google
+        </button>
+      </div>
+
+      <div class="relative flex py-2 items-center mb-6">
+        <div class="flex-grow border-t border-dark/10"></div>
+        <span class="flex-shrink-0 mx-4 text-dark/40 text-[9px] uppercase tracking-widest font-bold">Or use email</span>
+        <div class="flex-grow border-t border-dark/10"></div>
+      </div>
+
+      <form id="authForm" class="space-y-6">
+        <div id="nameFieldContainer" class="hidden">
+          <label class="block text-[10px] font-bold text-dark/50 uppercase tracking-[0.2em] mb-2">Full Name</label>
+          <input type="text" id="authName" class="w-full border-b border-dark/20 p-2 outline-none focus:border-brand font-serif text-lg bg-transparent">
+        </div>
+        <div>
+          <label class="block text-[10px] font-bold text-dark/50 uppercase tracking-[0.2em] mb-2">Email Address</label>
+          <input type="email" id="authEmail" required class="w-full border-b border-dark/20 p-2 outline-none focus:border-brand font-serif text-lg bg-transparent">
+        </div>
+        <div>
+          <label class="block text-[10px] font-bold text-dark/50 uppercase tracking-[0.2em] mb-2">Password</label>
+          <input type="password" id="authPassword" required class="w-full border-b border-dark/20 p-2 outline-none focus:border-brand font-serif text-lg bg-transparent">
+        </div>
+        <div id="authError" class="text-red-500 text-xs hidden"></div>
+        
+        <button type="submit" id="authSubmitBtn" class="w-full px-6 py-4 bg-dark text-white text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-brand transition-colors">
+          Sign In
+        </button>
+      </form>
+      
+      <div class="mt-6 text-center">
+        <button id="toggleAuthModeBtn" class="text-[10px] uppercase tracking-[0.1em] font-medium text-dark/60 hover:text-dark transition-colors">
+          Don't have an account? Create one.
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Modal -->
+  <div id="dashboardModal" aria-hidden="true" role="dialog" class="fixed inset-0 z-[220] flex items-center justify-center p-0 sm:p-6">
+    <div class="fixed inset-0 bg-cream/95 backdrop-blur-sm" data-close-dashboard="true"></div>
+    <div class="modal-panel relative bg-white w-full sm:max-w-4xl h-full sm:h-[80vh] flex flex-col border border-dark/10 shadow-2xl">
+      <div class="flex items-center justify-between p-6 border-b border-dark/10 shrink-0">
+        <h2 class="text-2xl font-serif text-dark">My Account</h2>
+        <div class="flex items-center gap-4">
+          <button id="logoutBtn" class="text-[10px] uppercase tracking-[0.2em] font-bold text-dark/50 hover:text-dark transition-colors">Sign Out</button>
+          <button id="closeDashboardBtn" class="text-dark hover:text-brand transition-colors">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" /></svg>
+          </button>
+        </div>
+      </div>
+      
+      <div class="flex-grow overflow-y-auto p-6 bg-[#FAFAFA]">
+        <div class="mb-8">
+          <h3 class="text-3xl font-serif text-dark mb-2">Welcome back.</h3>
+          <p id="dashboardEmail" class="text-sm font-light text-dark/60">...</p>
+        </div>
+        
+        <div>
+          <h4 class="text-[10px] uppercase tracking-[0.2em] font-bold text-dark/50 mb-4 border-b border-dark/10 pb-2">Order History</h4>
+          <div id="orderHistoryContainer" class="space-y-4">
+            <p class="text-sm font-light text-dark/40 py-4">Loading orders...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legal Modal -->
+  <div id="legalModal" aria-hidden="true" role="dialog" class="fixed inset-0 z-[230] flex items-center justify-center p-0 sm:p-6">
+    <div class="fixed inset-0 bg-cream/95 backdrop-blur-sm" onclick="closeLegalModal()"></div>
+    <div class="modal-panel relative bg-white w-full sm:max-w-2xl h-full sm:h-[70vh] flex flex-col border border-dark/10 shadow-2xl">
+      <div class="flex items-center justify-between p-6 border-b border-dark/10 shrink-0">
+        <h2 id="legalTitle" class="text-2xl font-serif text-dark">Legal</h2>
+        <button onclick="closeLegalModal()" class="text-dark hover:text-brand transition-colors">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+      </div>
+      <div id="legalContent" class="flex-grow overflow-y-auto p-6 bg-[#FAFAFA] font-light text-sm text-dark/70 leading-relaxed space-y-4">
+      </div>
+    </div>
+  </div>
+
+  <!-- Luxury Footer -->
+  <footer class="bg-dark text-cream py-20 border-t border-dark mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-16">
+        
+        <div class="lg:col-span-2">
+          <h2 class="text-3xl font-serif font-black tracking-tight uppercase mb-6">Yanos Kicks</h2>
+          <p class="text-cream/50 max-w-md mb-8 font-light text-sm leading-relaxed">
+            Bringing you the best selection of premium sneakers in Mzansi. Unmatched quality, secure shopping, and top-tier customer service from order to unboxing.
+          </p>
+          <div class="flex items-center gap-6">
+            <a href="https://wa.me/message/QSXVPANGMQIHP1" target="_blank" class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-[#25D366] flex items-center justify-center hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(37,211,102,0.25)] transition-all duration-300 text-white">
+              <svg class="w-7 h-7 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/yanoskicks_za" target="_blank" class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-tr from-[#f58529] via-[#dd2a7b] to-[#8134af] flex items-center justify-center hover:-translate-y-1 hover:shadow-[0_10px_20px_rgba(221,42,123,0.3)] transition-all duration-300 text-white">
+              <svg class="w-7 h-7 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+          </div>
+        </div>
+        
+        <div>
+          <h4 class="text-cream/40 font-bold mb-6 uppercase tracking-[0.2em] text-[10px]">Quick Links</h4>
+          <ul class="space-y-4 font-light text-sm text-cream/80">
+            <li><a href="#catalogue" class="hover:text-brand transition-colors">Shop All Kicks</a></li>
+            <li><a href="#how-it-works" class="hover:text-brand transition-colors">How to Order</a></li>
+            <li><a href="#faq" class="hover:text-brand transition-colors">Shipping & Returns</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-cream/40 font-bold mb-6 uppercase tracking-[0.2em] text-[10px]">Legal Policies</h4>
+          <ul class="space-y-4 font-light text-sm text-cream/80">
+            <li><button onclick="openLegalModal('privacy')" class="hover:text-brand transition-colors text-left">Privacy Policy</button></li>
+            <li><button onclick="openLegalModal('terms')" class="hover:text-brand transition-colors text-left">Terms of Service</button></li>
+            <li><button onclick="openLegalModal('refunds')" class="hover:text-brand transition-colors text-left">Refund Policy</button></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="text-cream/40 font-bold mb-6 uppercase tracking-[0.2em] text-[10px]">Contact Us</h4>
+          <ul class="space-y-4 font-light text-sm text-cream/80">
+            <li class="flex items-center gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+              Mon - Sun: 6am - 11pm
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+              Direct Message via IG
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="pt-8 border-t border-cream/10 flex flex-col items-center justify-center gap-4 text-[10px] font-medium uppercase tracking-[0.1em] text-cream/40 text-center">
+        <p>© 2026 Yanos Kicks. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Load local catalog data directly -->
+  <script src="./catalogData.js"></script>
+
+  <!-- Application Logic -->
+  <script type="module">
+    /* eslint-disable no-use-before-define */
+
+    // --- FIREBASE IMPORTS ---
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // Live getConfig (Gen 2, africa-south1) — links the store to Firebase + Paystack public key
+    const CONFIG_ENDPOINT = "https://getconfig-yggxusmprq-bq.a.run.app";
+
+    const FALLBACK_FIREBASE_CONFIG = {
+      apiKey: "AIzaSyBXSj5dRu6VjFgxwSmySjyXUiqZQp0DsR8",
+      authDomain: "yanos-kicks.firebaseapp.com",
+      projectId: "yanos-kicks",
+      storageBucket: "yanos-kicks.firebasestorage.app",
+      messagingSenderId: "516353385295",
+      appId: "1:516353385295:web:f9d843e833af632b6f5b3a",
+      measurementId: "G-ENF8J3Z49L",
+    };
+
+    let PAYSTACK_PUBLIC_KEY = "pk_live_YOUR_ACTUAL_LIVE_PUBLIC_KEY_HERE";
+    let firebaseConfig = { ...FALLBACK_FIREBASE_CONFIG };
+
+    try {
+      const cfgRes = await fetch(CONFIG_ENDPOINT);
+      if (cfgRes.ok) {
+        const remote = await cfgRes.json();
+        if (remote.paystackPublicKey) PAYSTACK_PUBLIC_KEY = remote.paystackPublicKey;
+        if (remote.firebaseConfig && typeof remote.firebaseConfig === "object") {
+          firebaseConfig = { ...firebaseConfig, ...remote.firebaseConfig };
+        }
+      }
+    } catch (e) {
+      console.warn("Remote config unavailable; using embedded fallback.", e);
+    }
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const fbAppId = 'yanos-kicks';
+
+    const state = {
+      items: [],
+      filtered: [],
+      brands: [],
+      categories: [],
+      models: [],
+      q: "",
+      brand: "all",
+      category: "all",
+      model: "all",
+      priceFilter: "all",
+      sort: "model_asc",
+      modal: { open: false, item: null, index: 0 },
+      // ECOM STATE
+      cart: JSON.parse(localStorage.getItem('yanos_cart')) || [],
+      shippingCost: 0,
+      user: null,
+      authMode: 'login'
+    };
+
+    // EXACT MATCH PRICING BASED ON YOUR ORIGINAL CATALOG
+    const EXACT_PRICES = {
+      "nikeairjordan1": 1600,
+      "nikeairjordan3": 1600,
+      "nikeairjordan4": 1600,
+      "nikeairjordanmvp": 1600,
+      "adidasrivalryy3": 1500,
+      "adidassambarhinestone": 1500,
+      "nikeairmax1": 1400,
+      "nikeairmax95": 1500,
+      "nikeairmaxdn": 1500,
+      "nikeairmaxdrift": 1500,
+      "nikeairmaxplustn": 1500,
+      "nikeairmaxplustn3": 1500,
+      "nikeairmoreuptempo": 1500,
+      "nikelevisairmax95": 1500,
+      "nikeshoxr4": 1500,
+      "nikeshoxtl": 1500,
+      "nikezoomvomeroroam": 1500,
+      "glencyffelow": 1500,
+      "adidasadizeroevosl": 1400,
+      "nikep6000": 1400,
+      "nikevomero18": 1400,
+      "nikeairforce1": 1400,
+      "nikeairmaxfuryosa": 1400,
+      "nikedunk": 1400,
+      "nikemetcon5": 1400,
+      "nikemetcon6": 1400,
+      "nikemind001": 1400,
+      "nikemind002": 1600,
+      "nikezoomxalphafly3": 1400,
+      "nikeavarover": 1400,
+      "adidascampus00": 1300,
+      "adidasgazellebold": 1300,
+      "adidassambaog": 1300,
+      "nikecourtvisionalta": 1300,
+      "nikecortez": 1300,
+      "suedexl": 1400 
+    };
+
+    // EXACT CATEGORIES BASED ON YOUR ORIGINAL CATALOG
+    const EXACT_CATEGORIES = {
+      "nikeairjordan1": "Jordan Heritage",
+      "nikeairjordan3": "Jordan Heritage",
+      "nikeairjordan4": "Jordan Heritage",
+      "nikeairjordanmvp": "Jordan Heritage",
+      "nikeairmax1": "Air Max Series",
+      "nikeairmax95": "Air Max Series",
+      "nikeairmaxdn": "Air Max Series",
+      "nikeairmaxdrift": "Air Max Series",
+      "nikeairmaxplustn": "Air Max Series",
+      "nikeairmaxplustn3": "Air Max Series",
+      "nikelevisairmax95": "Air Max Series",
+      "adidasadizeroevosl": "Performance",
+      "nikevomero18": "Performance",
+      "nikemetcon5": "Performance",
+      "nikemetcon6": "Performance",
+      "nikezoomxalphafly3": "Performance",
+      "adidasrivalryy3": "High Fashion",
+      "adidassambarhinestone": "High Fashion",
+      "adidascampus00": "Archival Classics",
+      "adidasgazellebold": "Archival Classics",
+      "adidassambaog": "Archival Classics",
+      "nikecortez": "Archival Classics"
+    };
+
+    const els = {
+      q: document.getElementById("q"),
+      sort: document.getElementById("sort"),
+      brand: document.getElementById("brand"),
+      category: document.getElementById("category"),
+      model: document.getElementById("model"),
+      priceFilter: document.getElementById("priceFilter"),
+      grid: document.getElementById("grid"),
+      empty: document.getElementById("empty"),
+      emptyHintText: document.getElementById("emptyHintText"),
+      countPill: document.getElementById("countPill"),
+      resultsHint: document.getElementById("resultsHint"),
+      clearBtn: document.getElementById("clearBtn"),
+      emptyClearBtn: document.getElementById("emptyClearBtn"),
+      heroCount: document.getElementById("heroCount"),
+
+      modal: document.getElementById("modal"),
+      modalTitle: document.getElementById("modalTitle"),
+      closeModalBtn: document.getElementById("closeModalBtn"),
+      prevImgBtn: document.getElementById("prevImgBtn"),
+      nextImgBtn: document.getElementById("nextImgBtn"),
+      viewerImg: document.getElementById("viewerImg"),
+      thumbs: document.getElementById("thumbs"),
+      header: document.getElementById("header"),
+
+      // ECOM Elements
+      shoeSize: document.getElementById("shoeSize"),
+      sizeError: document.getElementById("sizeError"),
+      addToCartBtn: document.getElementById("addToCartBtn"),
+      
+      cartPanel: document.getElementById("cartPanel"),
+      cartOverlay: document.getElementById("cartOverlay"),
+      openCartBtn: document.getElementById("openCartBtn"),
+      closeCartBtn: document.getElementById("closeCartBtn"),
+      cartItemsContainer: document.getElementById("cartItemsContainer"),
+      cartSubtotal: document.getElementById("cartSubtotal"),
+      cartBadge: document.getElementById("cartBadge"),
+      checkoutBtn: document.getElementById("checkoutBtn"),
+
+      checkoutModal: document.getElementById("checkoutModal"),
+      closeCheckoutBtn: document.getElementById("closeCheckoutBtn"),
+      checkoutForm: document.getElementById("checkoutForm"),
+      chkOrderSummary: document.getElementById("chkOrderSummary"),
+      addressLabel: document.getElementById("addressLabel"),
+      chkAddress: document.getElementById("chkAddress"),
+      chkName: document.getElementById("chkName"),
+      chkEmail: document.getElementById("chkEmail"),
+      chkPhone: document.getElementById("chkPhone"),
+      deliveryTypeRadios: document.getElementsByName("deliveryType"),
+      shippingRadios: document.getElementsByName("shipping"),
+      summarySubtotal: document.getElementById("summarySubtotal"),
+      summaryShipping: document.getElementById("summaryShipping"),
+      summaryTotal: document.getElementById("summaryTotal"),
+
+      accountBtn: document.getElementById("accountBtn"),
+      accountLabel: document.getElementById("accountLabel"),
+      
+      authModal: document.getElementById("authModal"),
+      closeAuthBtn: document.getElementById("closeAuthBtn"),
+      authForm: document.getElementById("authForm"),
+      authTitle: document.getElementById("authTitle"),
+      authName: document.getElementById("authName"),
+      authEmail: document.getElementById("authEmail"),
+      authPassword: document.getElementById("authPassword"),
+      authSubmitBtn: document.getElementById("authSubmitBtn"),
+      authError: document.getElementById("authError"),
+      toggleAuthModeBtn: document.getElementById("toggleAuthModeBtn"),
+      nameFieldContainer: document.getElementById("nameFieldContainer"),
+      googleSignInBtn: document.getElementById("googleSignInBtn"),
+
+      dashboardModal: document.getElementById("dashboardModal"),
+      closeDashboardBtn: document.getElementById("closeDashboardBtn"),
+      logoutBtn: document.getElementById("logoutBtn"),
+      dashboardEmail: document.getElementById("dashboardEmail"),
+      orderHistoryContainer: document.getElementById("orderHistoryContainer")
+    };
+
+    boot().catch((err) => {
+      console.error(err);
+      els.countPill.textContent = "Offline Mode";
+      els.resultsHint.textContent = "Data connection severed.";
+      els.resultsHint.classList.remove("hidden");
+    });
+
+    async function boot() {
+      setupAuthListener();
+      wireEvents();
+      await loadCatalog();
+      hydrateFilters();
+      applyAndRender();
+      renderCart();
+    }
+
+    function wireEvents() {
+      // Catalog Events
+      els.q.addEventListener("input", () => { state.q = els.q.value || ""; applyAndRender(); });
+      els.brand.addEventListener("change", () => { state.brand = els.brand.value; hydrateModelOptions(); applyAndRender(); });
+      els.category.addEventListener("change", () => { state.category = els.category.value; applyAndRender(); });
+      els.model.addEventListener("change", () => { state.model = els.model.value; applyAndRender(); });
+      els.priceFilter.addEventListener("change", () => { state.priceFilter = els.priceFilter.value; applyAndRender(); });
+      els.sort.addEventListener("change", () => { state.sort = els.sort.value; applyAndRender(); });
+
+      els.clearBtn.addEventListener("click", clearAll);
+      els.emptyClearBtn.addEventListener("click", clearAll);
+
+      // Product Modal Events
+      els.modal.addEventListener("click", (e) => {
+        if (e.target && e.target.dataset && e.target.dataset.close === "true") closeModal();
+      });
+      els.closeModalBtn.addEventListener("click", closeModal);
+      els.prevImgBtn.addEventListener("click", () => stepModal(-1));
+      els.nextImgBtn.addEventListener("click", () => stepModal(1));
+
+      document.addEventListener("keydown", (e) => {
+        if (!state.modal.open) return;
+        if (e.key === "Escape") closeModal();
+        if (e.key === "ArrowLeft") stepModal(-1);
+        if (e.key === "ArrowRight") stepModal(1);
+      });
+
+      // E-COM Events
+      els.addToCartBtn.addEventListener("click", handleAddToCart);
+      els.openCartBtn.addEventListener("click", toggleCart);
+      els.closeCartBtn.addEventListener("click", toggleCart);
+      els.cartOverlay.addEventListener("click", toggleCart);
+      
+      els.checkoutBtn.addEventListener("click", openCheckout);
+      els.closeCheckoutBtn.addEventListener("click", closeCheckout);
+      els.checkoutModal.addEventListener("click", (e) => { if (e.target && e.target.dataset && e.target.dataset.closeCheckout === "true") closeCheckout(); });
+      
+      Array.from(els.shippingRadios).forEach(r => r.addEventListener("change", updateCheckoutTotals));
+      
+      Array.from(els.deliveryTypeRadios).forEach(r => r.addEventListener("change", (e) => {
+        const val = e.target.value;
+        if(val === "Home Delivery") {
+          els.addressLabel.textContent = "Home Address Details";
+          els.chkAddress.placeholder = "Street address, suburb, city, postal code...";
+        } else if(val === "PostNet Branch") {
+          els.addressLabel.textContent = "PostNet Branch Details";
+          els.chkAddress.placeholder = "Enter the name of your nearest PostNet branch...";
+        } else if(val === "Courier Guy PUDO") {
+          els.addressLabel.textContent = "PUDO Locker Details";
+          els.chkAddress.placeholder = "Enter the specific PUDO locker location/name/address...";
+        } else {
+          els.addressLabel.textContent = "Custom Delivery Instructions";
+          els.chkAddress.placeholder = "Enter your custom delivery address or instructions...";
+        }
+      }));
+
+      els.checkoutForm.addEventListener("submit", handleCheckoutSubmit);
+
+      // Auth & Dashboard Events
+      els.accountBtn.addEventListener("click", () => {
+        if (state.user) openDashboard();
+        else openAuthModal();
+      });
+      els.closeAuthBtn.addEventListener("click", closeAuthModal);
+      els.authModal.addEventListener("click", (e) => { if (e.target.dataset.closeAuth) closeAuthModal(); });
+      els.toggleAuthModeBtn.addEventListener("click", toggleAuthMode);
+      els.authForm.addEventListener("submit", handleAuthSubmit);
+      els.googleSignInBtn.addEventListener("click", handleGoogleSignIn);
+      
+      els.closeDashboardBtn.addEventListener("click", closeDashboard);
+      els.dashboardModal.addEventListener("click", (e) => { if (e.target.dataset.closeDashboard) closeDashboard(); });
+      els.logoutBtn.addEventListener("click", handleLogout);
+    }
+
+    function clearAll() {
+      state.q = ""; state.brand = "all"; state.category = "all";
+      state.model = "all"; state.priceFilter = "all"; state.sort = "model_asc";
+      els.q.value = ""; els.sort.value = state.sort; els.priceFilter.value = state.priceFilter;
+      hydrateFilters();
+      applyAndRender();
+      document.getElementById('catalogue').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    async function loadCatalog() {
+      if (window.CATALOG_DATA) {
+        processData(window.CATALOG_DATA);
+        return;
+      }
+      try {
+        const res = await fetch("./catalog.json", { cache: "default" });
+        if (res.ok) {
+          const data = await res.json();
+          processData(data);
+          return;
+        }
+      } catch (err) {}
+      throw new Error("Catalog data missing.");
+    }
+
+    // CATALOG DATA PROCESSING
+    function processData(data) {
+      const items = Array.isArray(data.items) ? data.items : [];
+      state.items = items
+        .map(normalizeItem)
+        .filter((x) => x.images.length > 0)
+        .map((x) => ({
+          ...x,
+          cover: x.cover || x.images[0],
+          price: getItemPrice(x),
+          category: getItemCategory(x),
+          search: `${x.brand} ${x.model} ${x.colorway} ${x.variant} ${getItemCategory(x)}`.toLowerCase(),
+        }));
+
+      state.brands = unique(state.items.map((x) => x.brand)).sort(alpha);
+      state.categories = unique(state.items.map((x) => x.category)).sort(alpha);
+      state.models = unique(state.items.map((x) => x.model)).sort(alpha);
+
+      if (els.heroCount) els.heroCount.textContent = `${state.items.length || 0}`;
+    }
+
+    function normalizeItem(raw) {
+      const brand = safeText(raw.brand);
+      const model = safeText(raw.model);
+      const colorway = safeText(raw.colorway);
+      const variant = safeText(raw.variant);
+      const images = Array.isArray(raw.images) ? raw.images.map(toUrlPath) : [];
+      const cover = raw.cover ? toUrlPath(raw.cover) : "";
+      return { id: raw.id || `${brand}|${model}|${variant}|${colorway}`.toLowerCase(), brand, model, variant, colorway, images, cover };
+    }
+
+    function toUrlPath(p) { return String(p || "").replaceAll("\\", "/"); }
+
+    function hydrateFilters() {
+      hydrateOptions(els.brand, state.brands, state.brand, "All Brands");
+      state.brand = els.brand.value;
+      hydrateOptions(els.category, state.categories, state.category, "All Categories");
+      state.category = els.category.value;
+      hydrateModelOptions();
+      els.sort.value = state.sort;
+      els.priceFilter.value = state.priceFilter;
+    }
+
+    function hydrateOptions(selectEl, optionsArray, currentValue, allLabel) {
+      selectEl.innerHTML = "";
+      selectEl.appendChild(option("all", allLabel));
+      for (const opt of optionsArray) selectEl.appendChild(option(opt, opt));
+      selectEl.value = optionsArray.includes(currentValue) ? currentValue : "all";
+    }
+
+    function hydrateModelOptions() {
+      const current = state.model;
+      const allowed = state.brand === "all" 
+        ? state.models 
+        : unique(state.items.filter((x) => x.brand === state.brand).map((x) => x.model)).sort(alpha);
+      els.model.innerHTML = "";
+      els.model.appendChild(option("all", "All Models"));
+      for (const m of allowed) els.model.appendChild(option(m, prettyModel(m)));
+      els.model.value = allowed.includes(current) ? current : "all";
+      state.model = els.model.value;
+    }
+
+    function applyAndRender() {
+      const q = (state.q || "").trim().toLowerCase();
+      let list = state.items;
+
+      if (state.brand !== "all") list = list.filter((x) => x.brand === state.brand);
+      if (state.category !== "all") list = list.filter((x) => x.category === state.category);
+      if (state.model !== "all") list = list.filter((x) => x.model === state.model);
+      if (state.priceFilter !== "all") list = list.filter((x) => Number(x.price) === Number(state.priceFilter));
+      if (q) list = list.filter((x) => x.search.includes(q));
+
+      state.filtered = list.slice().sort(sorter(state.sort));
+      renderMeta();
+      renderGrid();
+    }
+
+    function renderMeta() {
+      const total = state.items.length;
+      const shown = state.filtered.length;
+      els.countPill.textContent = `${shown} PAIRS`;
+      if (total === 0) els.emptyHintText.textContent = "Data connection required.";
+      else if (shown === 0) els.emptyHintText.textContent = "Try changing your filters to see more kicks.";
+    }
+
+    function renderGrid() {
+      els.grid.innerHTML = "";
+      if (state.filtered.length === 0) {
+        els.grid.hidden = true;
+        els.empty.hidden = false;
+        return;
+      }
+      els.grid.hidden = false;
+      els.empty.hidden = true;
+
+      const frag = document.createDocumentFragment();
+      for (const item of state.filtered) frag.appendChild(createCard(item));
+      els.grid.appendChild(frag);
+    }
+
+    function createCard(item) {
+      const el = document.createElement("article");
+      el.className = "group cursor-pointer bg-white border border-dark/10 hover:border-dark transition-all duration-500 flex flex-col editorial-img-wrap shadow-sm hover:shadow-xl";
+      el.tabIndex = 0;
+      el.setAttribute("role", "button");
+      el.addEventListener("click", () => openModal(item));
+      el.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") openModal(item); });
+
+      const title = prettyModel(item.model);
+      const subtitle = [prettyLabel(item.colorway), prettyVariant(item.variant)].filter(Boolean).join(" • ");
+      const priceText = item.price ? formatZar(item.price) : "POA";
+      const categoryText = item.category || "Uncategorized";
+
+      el.innerHTML = `
+        <div class="relative w-full aspect-[4/5] bg-[#FDFDFD] flex items-center justify-center p-4 sm:p-8 overflow-hidden border-b border-dark/5">
+          <img class="w-full h-full object-contain mix-blend-multiply" src="${escapeAttr(item.cover)}" alt="${escapeAttr(title)}" loading="lazy" />
+          <div class="absolute top-2 left-2 sm:top-4 sm:left-4 z-10">
+             <span class="inline-block text-dark text-[7px] sm:text-[9px] font-bold uppercase tracking-[0.2em] bg-white/90 backdrop-blur px-1.5 py-0.5 sm:px-2 sm:py-1 border border-dark/10">${escapeHtml(categoryText)}</span>
+          </div>
+        </div>
+        <div class="p-3 sm:p-6 flex-grow flex flex-col bg-white">
+          <h3 class="text-sm sm:text-xl font-serif text-dark leading-tight group-hover:text-brand transition-colors mb-1 sm:mb-1.5 truncate">${escapeHtml(title)}</h3>
+          <p class="text-[9px] sm:text-[11px] font-light text-dark/50 uppercase tracking-wider line-clamp-1 sm:line-clamp-2 mb-3 sm:mb-6">${escapeHtml(subtitle || "—")}</p>
+          <div class="mt-auto flex items-center justify-center border-t border-dark/5 pt-3 sm:pt-4">
+             <span class="text-[14px] sm:text-[18px] font-serif italic font-medium text-dark/90 tracking-wide">${escapeHtml(priceText)}</span>
+          </div>
+        </div>
+      `;
+      return el;
+    }
+
+    // Dynamic Size Logic for Specific Items
+    function populateSizeDropdown(item) {
+      const model = canonical(item.model);
+      const colorway = String(item.colorway || "").toLowerCase();
+
+      // Check if it's a specific women's/small size shoe
+      const isSmallSizeTarget = 
+        (model.includes("alta") && colorway.includes("pink")) ||
+        (model === "adidasgazellebold" && (colorway === "pink-navy-gum" || colorway === "pink-white")) ||
+        (model === "nikeairjordan1" && (colorway === "washed-denim-pink" || colorway === "pastel-pink-purple")) ||
+        (model === "nikeairforce1" && colorway === "white-hot-pink-bling") ||
+        (model === "nikeairmaxfuryosa" && (colorway === "burgundy-teal-black" || colorway === "venice-pastel")) ||
+        (model === "nikezoomxalphafly3" && colorway === "purple-agate") ||
+        (model === "nikeshoxtl" && (colorway === "black-pink" || colorway === "silver-pink")) ||
+        (model === "nikezoomvomeroroam" && colorway === "pink-black") ||
+        (model === "nikemetcon5" && colorway === "pale-ivory-rose");
+
+      let sizeHTML = '<option value="">Choose size</option>';
+      
+      // Select exact sizes based on detection (No half sizes)
+      const sizes = isSmallSizeTarget ? [3, 4, 5, 6] : [3, 4, 5, 6, 7, 8, 9];
+      
+      sizes.forEach(s => sizeHTML += `<option value="${s}">UK ${s}</option>`);
+      els.shoeSize.innerHTML = sizeHTML;
+    }
+
+    function openModal(item) {
+      state.modal.open = true;
+      state.modal.item = item;
+      state.modal.index = 0;
+      els.modal.setAttribute("aria-hidden", "false");
+      
+      populateSizeDropdown(item);
+      els.shoeSize.value = ""; 
+      els.sizeError.classList.add('hidden');
+      
+      const priceText = item.price ? formatZar(item.price) : "POA";
+      
+      els.modalTitle.innerHTML = `
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 w-full">
+          <div class="truncate font-serif font-light text-xl sm:text-3xl text-dark">
+            <span class="font-bold font-sans text-[10px] tracking-[0.2em] uppercase block mb-1 text-dark/50">${escapeHtml(item.brand)}</span> 
+            ${escapeHtml(prettyModel(item.model))} <span class="italic text-dark/60 ml-1 sm:ml-2 text-lg sm:text-xl">— ${escapeHtml(prettyLabel(item.colorway))}</span>
+          </div>
+          <div class="shrink-0 sm:mr-2 mt-2 sm:mt-0">
+             <span class="inline-block text-dark/90 font-serif italic font-medium text-2xl sm:text-3xl tracking-wide">
+                ${escapeHtml(priceText)}
+             </span>
+          </div>
+        </div>`;
+        
+      renderModalImages();
+      setModalIndex(0);
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+      state.modal.open = false;
+      state.modal.item = null;
+      els.modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    function stepModal(delta) {
+      if (!state.modal.item) return;
+      const next = clamp(state.modal.index + delta, 0, state.modal.item.images.length - 1);
+      setModalIndex(next);
+    }
+
+    window.setModalIndex = function(index) {
+      setModalIndex(index);
+    }
+
+    function setModalIndex(index) {
+      const item = state.modal.item;
+      if (!item) return;
+      state.modal.index = index;
+      els.viewerImg.src = item.images[index] || item.cover;
+
+      const thumbBtns = els.thumbs.children;
+      for (let i = 0; i < thumbBtns.length; i++) {
+        const btn = thumbBtns[i];
+        if (i === index) {
+          btn.classList.add("border-dark");
+          btn.classList.remove("opacity-40", "border-transparent");
+        } else {
+          btn.classList.remove("border-dark");
+          btn.classList.add("opacity-40", "border-transparent");
+        }
+      }
+    }
+
+    function renderModalImages() {
+      const item = state.modal.item;
+      els.thumbs.innerHTML = "";
+      if (!item || item.images.length <= 1) return;
+
+      const frag = document.createDocumentFragment();
+      item.images.forEach((src, idx) => {
+        const b = document.createElement("button");
+        b.className = "w-full aspect-square border transition-all hover:opacity-100 opacity-40 p-1 bg-white";
+        b.addEventListener("click", () => setModalIndex(idx));
+        const img = document.createElement("img");
+        img.className = "w-full h-full object-contain mix-blend-multiply";
+        img.src = src;
+        img.loading = "lazy";
+        b.appendChild(img);
+        frag.appendChild(b);
+      });
+      els.thumbs.appendChild(frag);
+    }
+
+    /* Logic Utilities */
+    function option(value, label) { const o = document.createElement("option"); o.value = value; o.textContent = label; return o; }
+    function sorter(mode) {
+      const by = {
+        model_asc: (a, b) => alpha(a.model, b.model) || alpha(a.brand, b.brand),
+        model_desc: (a, b) => alpha(b.model, a.model) || alpha(b.brand, a.brand),
+        brand_asc: (a, b) => alpha(a.brand, b.brand) || alpha(a.model, b.model),
+        brand_desc: (a, b) => alpha(b.brand, a.brand) || alpha(b.model, a.model),
+        price_asc: (a, b) => Number(a.price || 999999) - Number(b.price || 999999),
+        price_desc: (a, b) => Number(b.price || 0) - Number(a.price || 0),
+      };
+      return by[mode] || by.model_asc;
+    }
+    function alpha(a, b) { return String(a || "").localeCompare(String(b || ""), undefined, { sensitivity: "base" }); }
+    function unique(arr) { return Array.from(new Set(arr.filter(Boolean))); }
+    function safeText(v) { return String(v || "").trim(); }
+    function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+    function escapeHtml(s) { return String(s).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;"); }
+    function escapeAttr(s) { return escapeHtml(s).replaceAll("`", "&#096;"); }
+    function prettyModel(s) { return prettifyWords(String(s || "")).trim(); }
+    function prettyVariant(s) { return prettifyWords(String(s || "").trim().replaceAll("\\", " / ").replaceAll("/", " / ")).replaceAll(/\s+\/\s+/g, " / ").trim(); }
+    function prettyLabel(s) { return titleCase(prettifyWords(String(s || "").trim().replaceAll("-", " ").replaceAll("_", " "))); }
+    function prettifyWords(s) { return String(s || "").replaceAll("_", " ").replaceAll("-", " ").replaceAll(/\s+/g, " ").replaceAll(/([a-z])([A-Z])/g, "$1 $2").replaceAll(/([A-Z])([A-Z][a-z])/g, "$1 $2").replaceAll(/([A-Za-z])(\d)/g, "$1 $2").replaceAll(/(\d)([A-Za-z])/g, "$1 $2"); }
+    function titleCase(s) { return String(s || "").split(" ").filter(Boolean).map((w) => (w.length <= 2 ? w.toUpperCase() : w[0].toUpperCase() + w.slice(1).toLowerCase())).join(" "); }
+    function canonical(s) { return String(s || "").toLowerCase().replace(/[^a-z0-9]/g, ""); }
+    function formatZar(amount) { return `R${Number(amount || 0).toLocaleString("en-ZA")}`; }
+
+    function getItemPrice(item) {
+      const model = canonical(item.model);
+      return EXACT_PRICES[model] || 1500; 
+    }
+
+    function getItemCategory(item) {
+      const model = canonical(item.model);
+      return EXACT_CATEGORIES[model] || "Modern Lifestyle"; 
+    }
+
+    // --- E-COM CART & CHECKOUT ---
+    function handleAddToCart() {
+      const size = els.shoeSize.value;
+      if (!size) {
+        els.sizeError.classList.remove('hidden');
+        return;
+      }
+      els.sizeError.classList.add('hidden');
+
+      const item = state.modal.item;
+      const existingIdx = state.cart.findIndex(c => c.id === item.id && c.size === size);
+
+      if (existingIdx > -1) {
+        state.cart[existingIdx].qty += 1;
+      } else {
+        state.cart.push({
+          id: item.id,
+          title: prettyModel(item.model) + ' ' + prettyLabel(item.colorway),
+          brand: item.brand,
+          cover: item.cover,
+          price: item.price,
+          size: size,
+          qty: 1
+        });
+      }
+
+      saveCart();
+      renderCart();
+      closeModal();
+      toggleCart();
+    }
+
+    window.removeFromCart = function(index) {
+      state.cart.splice(index, 1);
+      saveCart();
+      renderCart();
+      if(state.cart.length === 0) closeCheckout();
+    }
+
+    window.updateCartQty = function(index, delta) {
+      const newQty = state.cart[index].qty + delta;
+      if (newQty <= 0) {
+        window.removeFromCart(index);
+      } else {
+        state.cart[index].qty = newQty;
+        saveCart();
+        renderCart();
+      }
+    }
+
+    function saveCart() {
+      localStorage.setItem('yanos_cart', JSON.stringify(state.cart));
+      els.cartBadge.textContent = state.cart.reduce((sum, item) => sum + item.qty, 0);
+    }
+
+    function getCartTotal() {
+      return state.cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    }
+
+    function renderCart() {
+      els.cartItemsContainer.innerHTML = '';
+      els.cartBadge.textContent = state.cart.reduce((sum, item) => sum + item.qty, 0);
+      
+      const total = getCartTotal();
+      els.cartSubtotal.textContent = formatZar(total);
+
+      if (state.cart.length === 0) {
+        els.cartItemsContainer.innerHTML = '<p class="text-dark/40 font-light text-center mt-10">Your bag is empty.</p>';
+        els.checkoutBtn.disabled = true;
+        return;
+      }
+
+      els.checkoutBtn.disabled = false;
+
+      state.cart.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = "flex gap-4 border-b border-dark/5 pb-4";
+        div.innerHTML = `
+          <div class="w-20 h-20 bg-white border border-dark/10 flex items-center justify-center shrink-0">
+            <img src="${item.cover}" alt="${escapeAttr(item.title)}" class="w-full h-full object-contain mix-blend-multiply p-2">
+          </div>
+          <div class="flex-1 flex flex-col">
+            <div class="flex justify-between items-start">
+              <div>
+                <p class="text-[9px] font-bold text-dark/50 uppercase tracking-[0.2em]">${escapeHtml(item.brand)}</p>
+                <h4 class="font-serif text-sm text-dark leading-tight mt-1 line-clamp-2">${escapeHtml(item.title)}</h4>
+                <p class="text-[10px] text-dark/60 mt-1">Size: UK ${item.size}</p>
+              </div>
+              <button onclick="window.removeFromCart(${index})" class="text-dark/40 hover:text-red-500 transition-colors">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+              </button>
+            </div>
+            <div class="flex justify-between items-end mt-auto pt-2">
+              <div class="flex items-center border border-dark/20">
+                <button onclick="window.updateCartQty(${index}, -1)" class="px-2 py-1 hover:bg-dark/5 transition-colors">-</button>
+                <span class="text-xs px-2 font-medium">${item.qty}</span>
+                <button onclick="window.updateCartQty(${index}, 1)" class="px-2 py-1 hover:bg-dark/5 transition-colors">+</button>
+              </div>
+              <span class="font-serif italic font-medium">${formatZar(item.price * item.qty)}</span>
+            </div>
+          </div>
+        `;
+        els.cartItemsContainer.appendChild(div);
+      });
+    }
+
+    function toggleCart() {
+      const isOpen = els.cartPanel.classList.contains('open');
+      if (isOpen) {
+        els.cartPanel.classList.remove('open');
+        els.cartOverlay.classList.remove('open');
+        document.body.style.overflow = "";
+      } else {
+        els.cartPanel.classList.add('open');
+        els.cartOverlay.classList.add('open');
+        document.body.style.overflow = "hidden";
+      }
+    }
+
+    function openCheckout() {
+      if(state.cart.length === 0) return;
+      toggleCart(); 
+      
+      if (state.user) {
+        els.chkEmail.value = state.user.email;
+        if (state.user.displayName) els.chkName.value = state.user.displayName;
+      }
+
+      els.chkOrderSummary.innerHTML = state.cart.map(item => 
+        `<li><span class="font-bold">${item.qty}x</span> ${escapeHtml(item.title)} <span class="italic text-dark/60">(UK ${item.size})</span> - <span class="font-medium">${formatZar(item.price * item.qty)}</span></li>`
+      ).join('');
+
+      els.checkoutModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      updateCheckoutTotals();
+    }
+
+    function closeCheckout() {
+      els.checkoutModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    function updateCheckoutTotals() {
+      const subtotal = getCartTotal();
+      state.shippingCost = parseInt(Array.from(els.shippingRadios).find(r => r.checked).value);
+      
+      els.summarySubtotal.textContent = formatZar(subtotal);
+      els.summaryShipping.textContent = state.shippingCost === 0 ? "Free" : formatZar(state.shippingCost);
+      els.summaryTotal.textContent = formatZar(subtotal + state.shippingCost);
+    }
+
+    function handleCheckoutSubmit(e) {
+      e.preventDefault();
+      
+      const subtotal = getCartTotal();
+      const totalAmountCents = (subtotal + state.shippingCost) * 100; 
+      
+      const email = els.chkEmail.value;
+      const name = els.chkName.value;
+      const phone = els.chkPhone.value;
+      
+      const deliveryType = Array.from(els.deliveryTypeRadios).find(r => r.checked).value;
+      const address = els.chkAddress.value;
+      const fullDeliveryDest = `[${deliveryType}] ${address}`;
+      
+      const shippingSpeed = state.shippingCost === 0 ? "Standard Delivery (Free)" : "Overnight Express (+R89)";
+      const readableOrderSummary = state.cart.map(item => `${item.qty}x ${item.title} (UK ${item.size})`).join(' | ');
+
+      const orderRefId = 'YANOS_' + Math.floor((Math.random() * 1000000000) + 1);
+
+      // 1. SAVE PENDING ORDER TO FIRESTORE BEFORE OPENING PAYSTACK
+      if (state.user) {
+        try {
+          const orderData = {
+            items: state.cart,
+            totalAmount: subtotal + state.shippingCost,
+            reference: orderRefId,
+            date: new Date().toISOString(),
+            shippingMethod: shippingSpeed,
+            deliveryAddress: fullDeliveryDest,
+            status: "Pending" // 🔒 The secure webhook will update this to "Paid"
+          };
+          const ordersRef = collection(db, 'artifacts', fbAppId, 'users', state.user.uid, 'orders');
+          addDoc(ordersRef, orderData); // Fire and forget so UI doesn't hang
+        } catch(e) {
+          console.error("Failed to save pending order to account:", e);
+          alert("Secure checkout error. Please check your connection or log in.");
+          return;
+        }
+      } else {
+        alert("Please log in or create an account to process your order securely.");
+        return;
+      }
+
+      // 2. INITIALIZE PAYSTACK
+      const handler = PaystackPop.setup({
+        key: PAYSTACK_PUBLIC_KEY, 
+        email: email,
+        amount: totalAmountCents,
+        currency: 'ZAR', 
+        ref: orderRefId,
+        metadata: {
+          custom_fields: [
+            { display_name: "Customer Name", variable_name: "customer_name", value: name },
+            { display_name: "Phone Number", variable_name: "phone_number", value: phone },
+            { display_name: "Order Summary", variable_name: "order_summary", value: readableOrderSummary },
+            { display_name: "Delivery Details", variable_name: "delivery_details", value: fullDeliveryDest },
+            { display_name: "Shipping Speed", variable_name: "shipping_speed", value: shippingSpeed }
+          ]
+        },
+        callback: function(response){
+          // We rely entirely on the backend webhook to mark the order as paid.
+          alert('Payment complete! Reference: ' + response.reference + '\nWe will pack your order shortly.');
+          state.cart = [];
+          saveCart();
+          renderCart();
+          closeCheckout();
+        }
+      });
+      handler.openIframe();
+    }
+
+    // --- FIREBASE AUTH & USER ACCOUNT LOGIC ---
+    function setupAuthListener() {
+      onAuthStateChanged(auth, async (user) => {
+        state.user = user;
+        if (user) {
+          els.accountLabel.textContent = "My Account";
+          els.dashboardEmail.textContent = user.email || "Guest Account";
+        } else {
+          els.accountLabel.textContent = "Login";
+        }
+      });
+    }
+
+    function openAuthModal() {
+      els.authModal.setAttribute("aria-hidden", "false");
+      els.authError.classList.add("hidden");
+    }
+
+    function closeAuthModal() {
+      els.authModal.setAttribute("aria-hidden", "true");
+    }
+
+    function toggleAuthMode() {
+      state.authMode = state.authMode === 'login' ? 'signup' : 'login';
+      els.authError.classList.add("hidden");
+      
+      if (state.authMode === 'signup') {
+        els.authTitle.textContent = "Create Account";
+        els.authSubmitBtn.textContent = "Sign Up";
+        els.toggleAuthModeBtn.textContent = "Already have an account? Sign in.";
+        els.nameFieldContainer.classList.remove("hidden");
+        els.authName.required = true;
+      } else {
+        els.authTitle.textContent = "Welcome Back";
+        els.authSubmitBtn.textContent = "Sign In";
+        els.toggleAuthModeBtn.textContent = "Don't have an account? Create one.";
+        els.nameFieldContainer.classList.add("hidden");
+        els.authName.required = false;
+      }
+    }
+
+    async function handleAuthSubmit(e) {
+      e.preventDefault();
+      const email = els.authEmail.value;
+      const password = els.authPassword.value;
+      
+      els.authError.classList.add("hidden");
+      els.authSubmitBtn.textContent = "Processing...";
+      els.authSubmitBtn.disabled = true;
+
+      try {
+        if (state.authMode === 'signup') {
+          await createUserWithEmailAndPassword(auth, email, password);
+        } else {
+          await signInWithEmailAndPassword(auth, email, password);
+        }
+        closeAuthModal();
+      } catch (error) {
+        els.authError.textContent = "Error: " + error.message;
+        els.authError.classList.remove("hidden");
+      } finally {
+        els.authSubmitBtn.textContent = state.authMode === 'signup' ? "Sign Up" : "Sign In";
+        els.authSubmitBtn.disabled = false;
+      }
+    }
+
+    async function handleGoogleSignIn() {
+      els.authError.classList.add("hidden");
+      const provider = new GoogleAuthProvider();
+      try {
+        await signInWithPopup(auth, provider);
+        closeAuthModal();
+      } catch (error) {
+        els.authError.textContent = "Google Sign-In Error: " + error.message;
+        els.authError.classList.remove("hidden");
+      }
+    }
+
+    function handleLogout() {
+      signOut(auth);
+      closeDashboard();
+    }
+
+    async function openDashboard() {
+      els.dashboardModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      await fetchOrderHistory();
+    }
+
+    function closeDashboard() {
+      els.dashboardModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+    async function fetchOrderHistory() {
+      if (!state.user) return;
+      els.orderHistoryContainer.innerHTML = '<p class="text-sm font-light text-dark/40 py-4">Loading your kicks...</p>';
+      
+      try {
+        const ordersRef = collection(db, 'artifacts', fbAppId, 'users', state.user.uid, 'orders');
+        const querySnapshot = await getDocs(ordersRef);
+        
+        if (querySnapshot.empty) {
+          els.orderHistoryContainer.innerHTML = '<p class="text-sm font-light text-dark/40 py-4 bg-white border border-dark/10 text-center">You have no past orders yet.</p>';
+          return;
+        }
+
+        let html = '';
+        querySnapshot.forEach((doc) => {
+          const order = doc.data();
+          const itemsList = order.items.map(item => item.qty + "x " + item.title + " (UK " + item.size + ")").join('<br/>');
+          const date = new Date(order.date).toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' });
+          
+          html += '<div class="bg-white border border-dark/10 p-5 mb-4">' +
+              '<div class="flex justify-between items-start mb-3 border-b border-dark/5 pb-3">' +
+                '<div>' +
+                  '<p class="text-[9px] font-bold text-dark/50 uppercase tracking-[0.2em]">Order Date: ' + date + '</p>' +
+                  '<p class="font-serif text-lg text-dark mt-1">' + formatZar(order.totalAmount) + '</p>' +
+                '</div>' +
+                '<span class="px-2 py-1 bg-brand/10 text-brand text-[9px] font-bold uppercase tracking-[0.1em]">' + (order.status || 'Processing') + '</span>' +
+              '</div>' +
+              '<p class="text-sm text-dark font-serif mb-2 leading-relaxed">' + itemsList + '</p>' +
+              '<p class="text-[10px] text-dark/40 font-light mt-3">Ref: ' + order.reference + ' • ' + order.shippingMethod + '</p>' +
+            '</div>';
+        });
+        els.orderHistoryContainer.innerHTML = html;
+
+      } catch (error) {
+        console.error("Error fetching orders:", error);
+        els.orderHistoryContainer.innerHTML = '<p class="text-sm text-red-500 py-4">Could not load orders.</p>';
+      }
+    }
+
+    // --- LEGAL MODALS LOGIC ---
+    window.openLegalModal = function(type) {
+      const modal = document.getElementById('legalModal');
+      const titleEl = document.getElementById('legalTitle');
+      const contentEl = document.getElementById('legalContent');
+      
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      
+      if (type === 'privacy') {
+        titleEl.textContent = 'Privacy Policy';
+        contentEl.innerHTML = '<p>Your privacy is important to us. Yanos Kicks only collects information necessary to process and ship your orders, such as your name, email, and delivery address. Payment details are processed securely via Paystack and are never stored on our servers.</p><p>We will never sell or rent your personal data to third parties. If you wish to have your account data deleted, please contact us via WhatsApp.</p>';
+      } else if (type === 'terms') {
+        titleEl.textContent = 'Terms of Service';
+        contentEl.innerHTML = '<p>Welcome to Yanos Kicks. By using our website and purchasing our products, you agree to our terms. All sneakers sold are premium quality items. Pricing and availability are subject to change without notice.</p><p>We reserve the right to cancel any orders displaying fraudulent activity. In such cases, full refunds will be issued. Delivery timeframes (2-4 days standard, overnight express) are estimates provided by our courier partners and are not strictly guaranteed against unforeseen delays.</p>';
+      } else if (type === 'refunds') {
+        titleEl.textContent = 'Refund & Return Policy';
+        contentEl.innerHTML = '<p>Your satisfaction is our absolute top priority. We fully support refunds and size exchanges within 30 days of receiving your order.</p><p>To qualify for a refund or exchange, the sneakers must be <strong>unworn</strong>, in their original condition, and returned in their original packaging. The customer is responsible for return shipping costs unless the wrong item or size was delivered by our mistake. Once we receive and inspect the returned item, a refund will be processed to the original payment method within 3-5 business days.</p>';
+      }
+    }
+
+    window.closeLegalModal = function() {
+      document.getElementById('legalModal').setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+
+  </script>
+</body>
+</html>
