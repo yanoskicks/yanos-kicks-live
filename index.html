@@ -710,7 +710,8 @@
     // --- FIREBASE IMPORTS ---
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getAnalytics, isSupported } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-analytics.js";
 
     // Live getConfig (Gen 2, africa-south1) — links the store to Firebase + Paystack public key
     const CONFIG_ENDPOINT = "https://getconfig-yggxusmprq-bq.a.run.app";
@@ -744,7 +745,12 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    const fbAppId = 'yanos-kicks';
+    const fbAppId = "yanos-kicks";
+
+    // Analytics only runs in supported browsers; without this, Auth works but the Analytics cards stay empty.
+    if (firebaseConfig.measurementId && (await isSupported())) {
+      getAnalytics(app);
+    }
 
     const state = {
       items: [],
@@ -1482,6 +1488,10 @@
             totalAmount: subtotal + state.shippingCost,
             reference: orderRefId,
             date: new Date().toISOString(),
+            createdAt: serverTimestamp(),
+            customerName: name,
+            customerEmail: email,
+            customerPhone: phone,
             shippingMethod: shippingSpeed,
             deliveryAddress: fullDeliveryDest,
             status: "Pending" // 🔒 The secure webhook will update this to "Paid"
