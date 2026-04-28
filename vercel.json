@@ -1,14 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/admin",
-      "destination": "/admin.html"
-    },
-    {
-      "source": "/admin/:path*",
-      "destination": "/admin.html"
-    },
-    {
       "source": "/(.*)",
       "has": [
         {
