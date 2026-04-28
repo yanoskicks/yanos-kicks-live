@@ -125,8 +125,9 @@
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     const CONFIG_ENDPOINT = "https://getconfig-yggxusmprq-bq.a.run.app";
-    /** Must match `isAdmin()` in firestore.rules */
+    /** Must stay in sync with `isAdmin()` in firestore.rules */
     const AUTHORIZED_ADMIN_UID = "vqc5xx018tayOmyxt6BfKkCdVID2";
+    const AUTHORIZED_ADMIN_EMAIL = "yanoskicks@gmail.com";
 
     const $ = (id) => document.getElementById(id);
 
@@ -296,6 +297,9 @@
       clearError();
       loadBanner.classList.remove("hidden");
       try {
+        if (auth.currentUser) {
+          await auth.currentUser.getIdToken(true);
+        }
         const q = query(collectionGroup(db, "orders"), orderBy("createdAt", "desc"));
         const snap = await getDocs(q);
         renderOrders(snap);
@@ -333,7 +337,9 @@
 
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        if (user.uid !== AUTHORIZED_ADMIN_UID) {
+        const emailOk =
+          (user.email || "").toLowerCase() === AUTHORIZED_ADMIN_EMAIL.toLowerCase();
+        if (user.uid !== AUTHORIZED_ADMIN_UID && !emailOk) {
           loginError.textContent = "This Google account is not authorized for admin access.";
           loginError.classList.remove("hidden");
           await signOut(auth);
