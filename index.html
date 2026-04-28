@@ -710,7 +710,7 @@
     // --- FIREBASE IMPORTS ---
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-    import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
     // Live getConfig (Gen 2, africa-south1) — links the store to Firebase + Paystack public key
     const CONFIG_ENDPOINT = "https://getconfig-yggxusmprq-bq.a.run.app";
@@ -1620,13 +1620,27 @@
       document.body.style.overflow = "";
     }
 
+    function formatOrderHistoryDate(iso) {
+      const d = new Date(iso);
+      if (Number.isNaN(d.getTime())) return "—";
+      return d.toLocaleString("en-ZA", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+    }
+
     async function fetchOrderHistory() {
       if (!state.user) return;
       els.orderHistoryContainer.innerHTML = '<p class="text-sm font-light text-dark/40 py-4">Loading your kicks...</p>';
       
       try {
         const ordersRef = collection(db, 'artifacts', fbAppId, 'users', state.user.uid, 'orders');
-        const querySnapshot = await getDocs(ordersRef);
+        const ordersQuery = query(ordersRef, orderBy("date", "desc"));
+        const querySnapshot = await getDocs(ordersQuery);
         
         if (querySnapshot.empty) {
           els.orderHistoryContainer.innerHTML = '<p class="text-sm font-light text-dark/40 py-4 bg-white border border-dark/10 text-center">You have no past orders yet.</p>';
@@ -1637,7 +1651,7 @@
         querySnapshot.forEach((doc) => {
           const order = doc.data();
           const itemsList = order.items.map(item => item.qty + "x " + item.title + " (UK " + item.size + ")").join('<br/>');
-          const date = new Date(order.date).toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' });
+          const date = formatOrderHistoryDate(order.date);
           
           html += '<div class="bg-white border border-dark/10 p-5 mb-4">' +
               '<div class="flex justify-between items-start mb-3 border-b border-dark/5 pb-3">' +
