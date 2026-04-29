@@ -715,6 +715,14 @@
               <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
               Direct Message via IG
             </li>
+            <li class="flex items-center gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+              <a href="mailto:support@yanoskicks.co.za" class="hover:text-brand transition-colors">support@yanoskicks.co.za</a>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+              <a href="mailto:orders@yanoskicks.co.za" class="hover:text-brand transition-colors">orders@yanoskicks.co.za</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -1670,6 +1678,15 @@
       });
     }
 
+    function getOrderItemCover(item) {
+      if (item && item.cover) return item.cover;
+      if (item && item.id) {
+        const matched = state.items.find((catalogItem) => catalogItem.id === item.id);
+        if (matched && matched.cover) return matched.cover;
+      }
+      return "";
+    }
+
     async function fetchOrderHistory() {
       if (!state.user) return;
       els.orderHistoryContainer.innerHTML = '<p class="text-sm font-light text-dark/40 py-4">Loading your kicks...</p>';
@@ -1687,10 +1704,28 @@
         let html = '';
         querySnapshot.forEach((doc) => {
           const order = doc.data();
-          const itemsList = order.items.map(item => item.qty + "x " + item.title + " (UK " + item.size + ")").join('<br/>');
+          const itemCards = (order.items || []).map((item) => {
+            const safeTitle = escapeHtml(item.title || "Sneaker");
+            const safeSize = escapeHtml(item.size || "N/A");
+            const safeQty = Number(item.qty) > 0 ? Number(item.qty) : 1;
+            const safeTotal = formatZar((Number(item.price) || 0) * safeQty);
+            const cover = getOrderItemCover(item);
+            const imageHtml = cover
+              ? '<img src="' + escapeAttr(cover) + '" alt="' + escapeAttr(item.title || "Sneaker") + '" class="w-full h-full object-contain mix-blend-multiply p-2" loading="lazy" />'
+              : '<div class="w-full h-full flex items-center justify-center text-[9px] uppercase tracking-[0.1em] font-bold text-dark/30">No Image</div>';
+
+            return '<div class="flex items-center gap-3 border border-dark/10 bg-[#FCFCFC] p-2.5">' +
+              '<div class="w-16 h-16 bg-white border border-dark/10 shrink-0">' + imageHtml + '</div>' +
+              '<div class="min-w-0 flex-1">' +
+                '<p class="font-serif text-sm text-dark leading-tight line-clamp-2">' + safeTitle + '</p>' +
+                '<p class="text-[10px] uppercase tracking-[0.1em] font-bold text-dark/45 mt-1">UK ' + safeSize + ' • Qty ' + safeQty + '</p>' +
+              '</div>' +
+              '<p class="text-[11px] font-bold text-dark shrink-0">' + safeTotal + '</p>' +
+            '</div>';
+          }).join('');
           const date = formatOrderHistoryDate(order.date);
           
-          html += '<div class="bg-white border border-dark/10 p-5 mb-4">' +
+          html += '<div class="bg-white border border-dark/10 p-5 mb-4 shadow-sm">' +
               '<div class="flex justify-between items-start mb-3 border-b border-dark/5 pb-3">' +
                 '<div>' +
                   '<p class="text-[9px] font-bold text-dark/50 uppercase tracking-[0.2em]">Order Date: ' + date + '</p>' +
@@ -1698,7 +1733,7 @@
                 '</div>' +
                 '<span class="px-2 py-1 bg-brand/10 text-brand text-[9px] font-bold uppercase tracking-[0.1em]">' + (order.status || 'Processing') + '</span>' +
               '</div>' +
-              '<p class="text-sm text-dark font-serif mb-2 leading-relaxed">' + itemsList + '</p>' +
+              '<div class="space-y-2 mb-2">' + itemCards + '</div>' +
               '<p class="text-[10px] text-dark/40 font-light mt-3">Ref: ' + order.reference + ' • ' + order.shippingMethod + '</p>' +
             '</div>';
         });
@@ -1721,10 +1756,10 @@
       
       if (type === 'privacy') {
         titleEl.textContent = 'Privacy Policy';
-        contentEl.innerHTML = '<p>Your privacy is important to us. Yanos Kicks only collects information necessary to process and ship your orders, such as your name, email, and delivery address. Payment details are processed securely via Paystack and are never stored on our servers.</p><p>We will never sell or rent your personal data to third parties. If you wish to have your account data deleted, please contact us via WhatsApp.</p>';
+        contentEl.innerHTML = '<p>Your privacy is important to us. Yanos Kicks only collects information necessary to process and ship your orders, such as your name, email, and delivery address. Payment details are processed securely via Paystack and are never stored on our servers.</p><p>We will never sell or rent your personal data to third parties. If you wish to have your account data deleted, please contact us at <a class="text-brand underline" href="mailto:support@yanoskicks.co.za">support@yanoskicks.co.za</a>.</p>';
       } else if (type === 'terms') {
         titleEl.textContent = 'Terms of Service';
-        contentEl.innerHTML = '<p>Welcome to Yanos Kicks. By using our website and purchasing our products, you agree to our terms. All sneakers sold are premium quality items. Pricing and availability are subject to change without notice.</p><p>We reserve the right to cancel any orders displaying fraudulent activity. In such cases, full refunds will be issued. Delivery timeframes (2-4 days standard, overnight express) are estimates provided by our courier partners and are not strictly guaranteed against unforeseen delays.</p>';
+        contentEl.innerHTML = '<p>Welcome to Yanos Kicks. By using our website and purchasing our products, you agree to our terms. All sneakers sold are premium quality items. Pricing and availability are subject to change without notice.</p><p>We reserve the right to cancel any orders displaying fraudulent activity. In such cases, full refunds will be issued. Delivery timeframes (2-4 days standard, overnight express) are estimates provided by our courier partners and are not strictly guaranteed against unforeseen delays. Order-related queries can be sent to <a class="text-brand underline" href="mailto:orders@yanoskicks.co.za">orders@yanoskicks.co.za</a>.</p>';
       } else if (type === 'refunds') {
         titleEl.textContent = 'Refund & Return Policy';
         contentEl.innerHTML = '<p>Your satisfaction is our absolute top priority. We fully support refunds and size exchanges within 30 days of receiving your order.</p><p>To qualify for a refund or exchange, the sneakers must be <strong>unworn</strong>, in their original condition, and returned in their original packaging. The customer is responsible for return shipping costs unless the wrong item or size was delivered by our mistake. Once we receive and inspect the returned item, a refund will be processed to the original payment method within 3-5 business days.</p>';
