@@ -1523,6 +1523,9 @@
             totalAmount: subtotal + state.shippingCost,
             reference: orderRefId,
             date: new Date().toISOString(),
+            customerEmail: email,
+            customerName: name,
+            customerPhone: phone,
             shippingMethod: shippingSpeed,
             deliveryAddress: fullDeliveryDest,
             status: "Pending" // 🔒 The secure webhook will update this to "Paid"
